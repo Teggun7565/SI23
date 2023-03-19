@@ -1,0 +1,12 @@
+En este ejercicio les faltó responder las preguntas del final (por lo tanto el 90)
+Respecto a la solución, creo que el problema es como están ordenando los vectores propios. Debería ser:
+
+# TODO: Ordena los eigenvalues y eigenvectors de mayor a menor eigenvalue
+# Utiliza los índices previamente calculados
+# regresa los eigenvectors y eigenvalues en el orden indicado
+# =========== Start solution ==============
+eigenvalues = eigenvalues[idx_ordered]
+eigenvectors = eigenvectors[:, idx_ordered]    # <----------
+# =========== End solution ================
+
+El argsort no va a darles el resultado deseado en los eigenvectors porque es una matriz.
