@@ -35,7 +35,7 @@ def predict(img_title_paths):
 
         # Inferencia
         # TODO: Para la imagen de entrada, utiliza tu modelo para predecir la clase mas probale
-
+        pred_label = EMOTIONS_MAP[np.argmax(mi_inferencia(modelo, transformed))]
 
         # Original / transformada
         # pred_label (str): nombre de la clase predicha
@@ -55,3 +55,15 @@ if __name__=="__main__":
     # Direcciones relativas a este archivo
     img_paths = ["./test_imgs/happy.png"]
     predict(img_paths)
+
+def mi_inferencia(modelo, datos):
+    # Modelo en modo evaluación
+    modelo.eval()
+
+    # Para no calcular gradientes
+    with torch.no_grad():
+        # Obtenemos las predicciones del modelo
+        preds = modelo(datos)
+
+    # Convertimos los resultados a numpy para manipularlos facilmente
+    return to_numpy(preds)
