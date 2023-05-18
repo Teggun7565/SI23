@@ -36,6 +36,7 @@ class Network(nn.Module):
         return out_dim
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = x.to(self.device)
         # TODO: Define la propagacion hacia adelante de tu red
         x = F.relu(self.bn1(self.conv1(x)))
         x = F.relu(self.bn2(self.conv2(x)))
