@@ -72,7 +72,7 @@ def train():
         train_loss = 0
         for i, batch in enumerate(tqdm(train_loader, desc=f"Epoch: {epoch}")):
             batch_imgs = batch['transformed']
-            batch_labels = batch['label']
+            batch_labels = batch['label'].cuda()
             # TODO Zero grad, forward pass, backward pass, optimizer step
             optimizer.zero_grad()
             logits, proba = modelo(batch_imgs)
