@@ -26,7 +26,7 @@ def predict(img_title_paths):
     '''
     # Cargar el modelo
     modelo = Network(48, 7)
-    modelo.load_model("modelo_1.pt")
+    modelo.load_model("mejor_modelo.pt")
     for path in img_title_paths:
         # Cargar la imagen
         # np.ndarray, torch.Tensor
@@ -35,7 +35,7 @@ def predict(img_title_paths):
 
         # Inferencia
         # TODO: Para la imagen de entrada, utiliza tu modelo para predecir la clase mas probale
-        pred_label = EMOTIONS_MAP[np.argmax(mi_inferencia(modelo, transformed))]
+        pred_label = EMOTIONS_MAP[np.argmax(Network.mi_inferencia(modelo, transformed))]
 
         # Original / transformada
         # pred_label (str): nombre de la clase predicha
@@ -51,19 +51,21 @@ def predict(img_title_paths):
         cv2.imshow("Predicción - transformed", denormalized)
         cv2.waitKey(0)
 
+# def mi_inferencia(modelo, datos):
+#     # Modelo en modo evaluación
+#     modelo.eval()
+
+#     # Para no calcular gradientes
+#     with torch.no_grad():
+#         # Obtenemos las predicciones del modelo
+#         preds = modelo(datos)
+
+#     # Convertimos los resultados a numpy para manipularlos facilmente
+#     return to_numpy(preds)
+
 if __name__=="__main__":
     # Direcciones relativas a este archivo
-    img_paths = ["./test_imgs/happy.png"]
+    img_paths = ["./test_imgs/happy.png","./test_imgs/batofeliz1.jpg"]
     predict(img_paths)
 
-def mi_inferencia(modelo, datos):
-    # Modelo en modo evaluación
-    modelo.eval()
 
-    # Para no calcular gradientes
-    with torch.no_grad():
-        # Obtenemos las predicciones del modelo
-        preds = modelo(datos)
-
-    # Convertimos los resultados a numpy para manipularlos facilmente
-    return to_numpy(preds)
