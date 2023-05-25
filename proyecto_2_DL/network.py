@@ -12,12 +12,29 @@ class Network(nn.Module):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
         # TODO: Calcular dimension de salida
+        # out_dim = self.calc_out_dim(input_dim, kernel_size=3, stride=1, padding=0)
+        # out_dim = self.calc_out_dim(out_dim, kernel_size=3, stride=1, padding=0)
+        # out_dim = self.calc_out_dim(out_dim, kernel_size=3, stride=1, padding=0)
+        # out_dim = self.calc_out_dim(out_dim, kernel_size=3, stride=1, padding=0)
         out_dim = self.calc_out_dim(input_dim, kernel_size=3, stride=1, padding=0)
         out_dim = self.calc_out_dim(out_dim, kernel_size=3, stride=1, padding=0)
         out_dim = self.calc_out_dim(out_dim, kernel_size=3, stride=1, padding=0)
         out_dim = self.calc_out_dim(out_dim, kernel_size=3, stride=1, padding=0)
 
         # TODO: Define las capas de tu red
+        # self.conv1 = nn.Conv2d(1, 16, kernel_size=3, stride=1, padding=0)
+        # self.bn1 = nn.BatchNorm2d(16)
+        # self.conv2 = nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=0)
+        # self.bn2 = nn.BatchNorm2d(32)
+        # self.conv3 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=0)
+        # self.bn3 = nn.BatchNorm2d(64)
+        # self.conv4 = nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=0)
+        # self.bn4 = nn.BatchNorm2d(128)
+        # self.fc1 = nn.Linear(128*out_dim*out_dim, 256)
+        # self.fc2 = nn.Linear(256, n_classes)
+
+        # self.to(self.device)
+
         self.conv1 = nn.Conv2d(1, 16, kernel_size=3, stride=1, padding=0)
         self.bn1 = nn.BatchNorm2d(16)
         self.conv2 = nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=0)
@@ -26,19 +43,37 @@ class Network(nn.Module):
         self.bn3 = nn.BatchNorm2d(64)
         self.conv4 = nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=0)
         self.bn4 = nn.BatchNorm2d(128)
-        self.fc1 = nn.Linear(128*out_dim*out_dim, 256)
+        self.fc1 = nn.Linear(128 * out_dim * out_dim, 256)
         self.fc2 = nn.Linear(256, n_classes)
 
+        self.init_weights()
         self.to(self.device)
+
  
     def calc_out_dim(self, in_dim, kernel_size, stride=1, padding=0):
         out_dim = math.floor((in_dim - kernel_size + 2*padding)/stride) + 1
         return out_dim
+    
+    def init_weights(self):
+        for module in self.modules():
+            if isinstance(module, nn.Conv2d) or isinstance(module, nn.Linear):
+                nn.init.xavier_uniform_(module.weight)
+                if module.bias is not None:
+                    nn.init.constant_(module.bias, 0.0)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # TODO: Define la propagacion hacia adelante de tu red
+        # x = x.to(self.device)
+        # x = F.relu(self.bn1(self.conv1(x)))
+        # x = F.relu(self.bn2(self.conv2(x)))
+        # x = F.relu(self.bn3(self.conv3(x)))
+        # x = F.relu(self.bn4(self.conv4(x)))
+        # x = x.view(x.size(0), -1)
+        # x = F.relu(self.fc1(x))
+        # logits = self.fc2(x)
+        # proba = F.softmax(logits, dim=1)
+        # return logits, proba
         x = x.to(self.device)
-        # x = x.unsqueeze(0)
         x = F.relu(self.bn1(self.conv1(x)))
         x = F.relu(self.bn2(self.conv2(x)))
         x = F.relu(self.bn3(self.conv3(x)))
@@ -81,5 +116,5 @@ class Network(nn.Module):
         models_path = file_path / 'models' / model_name
         assert models_path.exists(), f"El archivo {models_path} no existe"
         # TODO: Carga los pesos de tu red neuronal
-        self.load_state_dict(torch.load(models_path))
-        self.to(self.device)
+        self.load_state_dict(torch.load(models_path, map_location=self.device))
+        # self.to(self.device)
