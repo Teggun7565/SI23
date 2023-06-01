@@ -16,7 +16,7 @@ class PlotLosses:
 
         self.logs = []
 
-    def on_epoch_end(self, epoch, train_loss, val_loss):
+    def on_epoch_end(self, train_loss, val_loss):
         self.x.append(self.i)
         self.losses.append(train_loss)
         self.val_losses.append(val_loss)

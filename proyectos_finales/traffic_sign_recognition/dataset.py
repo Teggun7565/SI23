@@ -20,10 +20,10 @@ def get_dataloaders():
 
     # https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader
     train_dataloader = DataLoader(train_dataset,
-                                  batch_size=64,
+                                  batch_size=192,
                                   shuffle=True)
     val_dataloader = DataLoader(val_dataset,
-                                batch_size=64,
+                                batch_size=192,
                                 shuffle=False)
     return train_dataloader, val_dataloader
 

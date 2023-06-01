@@ -35,12 +35,14 @@ def visualize_test(test_images, pred, labels):
 if __name__ == "__main__":
     file_path = Path(__file__).parent.absolute()
 
-    # TODO: Carga tu modelo 
+    # TODO: load your model
+    model = Network(48, 7)
+    model.load_model("mejor_modelo.pt")
 
     test_data = file_path / "data/test_data/test_data/"
     test_labels = pd.read_csv(file_path / "data/test_labels.csv")
 
-    # Nombre de los archivos de las imagenes para cada etiqueta
+    
     image_files = test_labels["image"]
 
     labels = torch.from_numpy(test_labels["label"].to_numpy())
@@ -50,6 +52,6 @@ if __name__ == "__main__":
         test_images.append(img)
     test_images = torch.stack(test_images)
 
-    # TODO: Evalua tu modelo para todo el conjunto de test
-    # y visualiza algunos de los resultados usando visualize_test
+    # TODO: Evaluate your model with all the files in test 
+    # and visualize some of the results using visualize_test
 
