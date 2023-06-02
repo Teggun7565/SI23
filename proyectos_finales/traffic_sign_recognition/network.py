@@ -53,6 +53,14 @@ class Network(nn.Module):
         assert models_path.exists(), f"El archivo {models_path} no existe"
         self.load_state_dict(torch.load(models_path, map_location=self.device))
 
+    def evaluar_inferencia(self, x):
+        with torch.no_grad():
+            self.eval()
+            x = x.to(self.device)
+            _, proba = self.forward(x.unsqueeze(0))
+            pred_class = torch.argmax(proba).item()
+        return pred_class
+
 
 def main():
     net = Network()
