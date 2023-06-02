@@ -36,7 +36,7 @@ if __name__ == "__main__":
     file_path = Path(__file__).parent.absolute()
 
     # TODO: load your model
-    model = Network(48, 7)
+    model = Network()
     model.load_model("mejor_modelo.pt")
 
     test_data = file_path / "data/test_data/test_data/"
@@ -53,5 +53,10 @@ if __name__ == "__main__":
     test_images = torch.stack(test_images)
 
     # TODO: Evaluate your model with all the files in test 
+    with torch.no_grad():
+        outputs = model(test_images)
+        predictions = torch.argmax(outputs, dim=1)
+
     # and visualize some of the results using visualize_test
+    visualize_test(test_images, predictions, labels)
 
