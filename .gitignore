@@ -126,6 +126,7 @@ venv.bak/
 dmypy.json
 
 # Pyre type checker
+*.jpg
 .pyre/
 *.ini
 ejercicio_5-MLP_reg/test_preds.csv
@@ -140,8 +141,9 @@ proyecto_2_DL/models/*.pt
 proyecto_2_DL/data/*.csv
 proyecto_2_DL/data/*.csv
 proyecto_2_DL_sol/
-proyecto_final/traffic_sign_recognition/data/crop_dataset/
+proyecto_final/traffic_sign_recognition/data/crop_dataset/crop_dataset/*
 proyecto_final/traffic_sign_recognition/data/test_data/
+proyecto_final/traffic_sign_recognition/data/test_data/test_data/*.jpg
 proyecto_final/traffic_sign_recognition/data/*.csv
 proyecto_final/traffic_sign_recognition/models/
 proyecto_final/traffic_sign_recognition/sol/data
